@@ -30,7 +30,10 @@ script:
   - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
   - sudo mv appdir/usr/lib/* /usr/local/lib ; export LD_LIBRARY_PATH=/usr/local/lib # Workaround for https://github.com/probonopd/linuxdeployqt/issues/160
   - export VERSION=$(git rev-parse --short HEAD)
-  - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/imagemagick.desktop -bundle-non-qt-libs -verbose=2 -appimage
+  - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/imagemagick.desktop -bundle-non-qt-libs
+  - ./linuxdeployqt*.AppImage --appimage-extract
+  - rm ./appdir/AppRun ; cp AppRun appdir/ ; chmod a+x ./appdir/AppRun # Replace symlink with custom script
+  - PATH=./squashfs-root/usr/bin:$PATH ./squashfs-root/usr/bin/appimagetool ./appdir/
 
 after_success:
   - find ./appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
