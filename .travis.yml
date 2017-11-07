@@ -28,7 +28,7 @@ script:
   - wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
   - chmod a+x linuxdeployqt*.AppImage
   - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
-  - sudo mv appdir/usr/lib/* /usr/local/lib ; export LD_LIBRARY_PATH=/usr/local/lib # Workaround for https://github.com/probonopd/linuxdeployqt/issues/160
+  - sudo mv appdir/usr/lib/*.so* /usr/local/lib ; export LD_LIBRARY_PATH=/usr/local/lib # Workaround for https://github.com/probonopd/linuxdeployqt/issues/160
   - export VERSION=$(git rev-parse --short HEAD)-$CC
   - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/imagemagick.desktop -bundle-non-qt-libs
   - ./linuxdeployqt*.AppImage --appimage-extract
