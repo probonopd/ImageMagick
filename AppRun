@@ -8,6 +8,7 @@
 HERE="$(dirname "$(readlink -f "${0}")")"
 
 export MAGICK_HOME="$HERE/usr" # http://www.imagemagick.org/QuickStart.txt
+export PREFIX="$HERE/usr" # https://github.com/ImageMagick/ImageMagick/blob/d06c8899b44a0592ff7b6f4ad14a595b8de2084a/ImageMagick/script/resources.html#L175
 
 if [ ! -z $APPIMAGE ] ; then
   BINARY_NAME=$(basename "$ARGV0")
