@@ -9,11 +9,17 @@ HERE="$(dirname "$(readlink -f "${0}")")"
 
 export MAGICK_HOME="$HERE/usr" # http://www.imagemagick.org/QuickStart.txt
 export MAGICK_CONFIGURE_PATH="$HERE/usr/lib/ImageMagick-7.0.7/config-Q16/" # Undocumented?
+export MANPATH="$HERE/usr/share/man:$MANPATH"
+export INFOPATH="$HERE/usr/share/info:$MANPATH"
 
 if [ ! -z $APPIMAGE ] ; then
   BINARY_NAME=$(basename "$ARGV0")
   if [ -e "$HERE/usr/bin/$BINARY_NAME" ] ; then
     exec "$HERE/usr/bin/$BINARY_NAME" "$@"
+  elif [ "$BINARY_NAME" == "man" ] ; then
+    exec "$@"
+  elif [ "$BINARY_NAME" == "info" ] ; then
+    exec "$@"
   else
     exec "$HERE/usr/bin/magick" "$@"
   fi
