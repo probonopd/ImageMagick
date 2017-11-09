@@ -27,7 +27,6 @@ script:
   - wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
   - chmod a+x linuxdeployqt*.AppImage
   - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
-  - # sudo mv appdir/usr/lib/*.so* /usr/local/lib ; export LD_LIBRARY_PATH=/usr/local/lib # Workaround for https://github.com/probonopd/linuxdeployqt/issues/160
   - export VERSION=$(git rev-parse --short HEAD)-$CC
   - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/imagemagick.desktop -bundle-non-qt-libs
   - ./linuxdeployqt*.AppImage --appimage-extract
@@ -36,8 +35,6 @@ script:
 
 after_success:
   - find ./appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
-  - # curl --upload-file ./ImageMagick*.AppImage https://transfer.sh/ImageMagick-git.$(git rev-parse --short HEAD)-x86_64.AppImage
-  - ls -lh *
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
   - bash upload.sh ImageMagick*AppImage*
   
