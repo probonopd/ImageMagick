@@ -5,8 +5,6 @@
 # the corresponding binary depending on which
 # symlink was used to invoke the AppImage
 
-echo "$1"
-
 HERE="$(dirname "$(readlink -f "${0}")")"
 
 export MAGICK_HOME="$HERE/usr" # http://www.imagemagick.org/QuickStart.txt
